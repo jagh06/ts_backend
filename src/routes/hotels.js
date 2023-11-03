@@ -10,11 +10,11 @@ const {
   validatorCreateItem,
   validatorGetItem,
 } = require("../validators/hotels");
-const imageUpload = require("../utils/fileUpload");
+const upload = require('../config/multer')
 const router = express.Router();
 
 //create hotel
-router.post("/", imageUpload, createItem);
+router.post("/", upload.array('images'), createItem);
 
 //get all hotels
 router.get("/", getItems);

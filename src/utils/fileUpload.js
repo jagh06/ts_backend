@@ -1,8 +1,10 @@
-const fileUpload = require('express-fileupload')
+const fileUpload = require("express-fileupload");
 
-const imageUpload =  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "./uploads",
-  });
+const imageUpload = fileUpload({
+  useTempFiles: true,
+  tempFileDir: "./uploads",
+});
 
-module.exports =  imageUpload;
+
+
+module.exports = imageUpload;

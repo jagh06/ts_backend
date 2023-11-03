@@ -1,7 +1,7 @@
 const { matchedData } = require("express-validator");
 const { hotelModel } = require("../models");
 const { handleHttpError } = require("../utils/handleHttpError");
-const { uploadImage, deleteImage } = require("../config/cloudinary");
+const { uploadImages, deleteImage } = require("../config/cloudinary");
 const fs = require("fs-extra");
 
 const getItems = async (req, res) => {
@@ -39,33 +39,51 @@ const createItem = async (req, res) => {
       city,
       phone,
     } = req.body;
-    
-    const data = new hotelModel({
-      nameowner,
-      lastnameowner,
-      emailowner,
-      namehotel,
-      description,
-      price,
-      postalcode,
-      street,
-      streetnumber,
-      city,
-      phone,
-    });
+  
+    const uploader = async (path) => await uploadImages(path, "hotelImages");
+    try {
+      if (req.method === "POST") {
+        const urls = [];
+        const files = req.files;
+        for (const file of files) {
+          const { path } = file;
+          const { secure_url, public_id } = await uploader(path);
+          urls.push({ public_id, secure_url });
+          fs.unlinkSync(path);
+        }
 
-    if (req.files?.image) {
-      const result = await uploadImage(req.files.image.tempFilePath);
-      data.image = {
-        public_id: result.public_id,
-        secure_url: result.secure_url,
-      };
+        const newHotel = await new hotelModel({
+          nameowner,
+          lastnameowner,
+          emailowner,
+          namehotel,
+          description,
+          price,
+          postalcode,
+          street,
+          streetnumber,
+          city,
+          phone,
+          images: urls,
+        });
 
-      await fs.unlink(req.files.image.tempFilePath);
+        newHotel.save();
+        return res.status(200).json({
+          success: true,
+          message: "product created sucessfully",
+          data: newHotel,
+        });
+      } else {
+        return res.status(405).json({
+          err: `${req.method} method not allowed`,
+        });
+      }
+    } catch (error) {
+      return res.status(412).send({
+        success: false,
+        message: error.message,
+      });
     }
-    await data.save();
-
-    res.json(data);
   } catch (error) {
     handleHttpError(res, "ERROR_CREATE_ITEM");
   }
@@ -84,11 +102,14 @@ const deleteItem = async (req, res) => {
   try {
     const data = await hotelModel.findByIdAndDelete(req.params.id);
 
-    if (data.image?.public_id) {
-      await deleteImage(data.image.public_id);
+    for (const file of data.images) {
+      const { public_id } = file;
+      if (public_id) {
+        await deletesImage(public_id);
+      }
     }
 
-    res.json(data);
+   res.json(data);
   } catch (error) {
     handleHttpError(res, "ERROR_DELETE_ITEM");
   }

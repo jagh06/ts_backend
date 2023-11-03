@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const mongooseDelete = require("mongoose-delete");
 
+const urlSchema = new mongoose.Schema({ public_id: String, secure_url: String})
 const HotelSchema = new mongoose.Schema(
   {
     nameowner: {
@@ -58,15 +59,9 @@ const HotelSchema = new mongoose.Schema(
       //required: true,
       trim: true,
     },
-    image: {
-      public_id: String,
-      secure_url: String,
-    },
-    // images: [
-    //     {
-    //         url: String,
-    //     }
-    // ]
+    images: [
+      urlSchema 
+    ]
   },
   {
     timestamps: true, //TODO createdAt, updatedAt
