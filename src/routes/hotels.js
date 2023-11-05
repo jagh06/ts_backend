@@ -10,22 +10,24 @@ const {
   validatorCreateItem,
   validatorGetItem,
 } = require("../validators/hotels");
-const upload = require('../config/multer')
+const upload = require('../config/multer');
+const authMiddleware = require("../middlewares/session");
+const { checkRol } = require("../middlewares/rol");
 const router = express.Router();
 
 //create hotel
-router.post("/", upload.array('images'), createItem);
+router.post("/", authMiddleware, checkRol(["admin"]), upload.array('images'), createItem);
 
 //get all hotels
-router.get("/", getItems);
+router.get("/", authMiddleware, getItems);
 
 //get hotel
-router.get("/:id", validatorGetItem, getItem);
+router.get("/:id", authMiddleware, validatorGetItem, getItem);
 
 //update hotel
-router.put("/:id", validatorGetItem, updateItem);
+router.put("/:id", authMiddleware, validatorGetItem, updateItem);
 
 //delete hotel
-router.delete("/:id", validatorGetItem, deleteItem);
+router.delete("/:id", authMiddleware, validatorGetItem, deleteItem);
 
 module.exports = router;

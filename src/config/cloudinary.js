@@ -15,17 +15,6 @@ async function uploadImages(file, folder) {
   return await cloudinary.uploader.upload(file, {
     folder: folder,
   });
-  // return new Promise(resolve => {
-  //   cloudinary.uploader.upload(file, (result) => {
-  //     resolve({
-  //       url: result.url,
-  //       id: result.public_id
-  //     },{
-  //       resource_type: "auto",
-  //       folder: folder
-  //     })
-  //   })
-  // })
 }
 
 async function uploadImage(filePath) {

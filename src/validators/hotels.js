@@ -3,18 +3,16 @@ const validateResults = require("../utils/handleValidators");
 
 
 const validatorCreateItem = [
-    check("owner").exists().notEmpty(),
-    check("owner.name").exists().notEmpty(),
-    check("owner.lastname").exists().notEmpty(),
-    check("owner.email").exists().notEmpty(),
+    check("nameowner").exists().notEmpty(),
+    check("lastnameowner").exists().notEmpty(),
+    check("emailowner").exists().notEmpty(),
     check("namehotel").exists().notEmpty().isLength({ min: 3, max: 50 }),
     check("description").exists().notEmpty().isLength({ min: 10, max: 100 }),
     check("price").exists().notEmpty(),
-    check("location").exists().notEmpty(),
-    check("location.postalcode").exists().notEmpty(),
-    check("location.street").exists().notEmpty(),
-    check("location.streetnumber").exists().notEmpty(),
-    check("location.city").exists().notEmpty(),
+    check("postalcode").exists().notEmpty(),
+    check("street").exists().notEmpty(),
+    check("streetnumber").exists().notEmpty(),
+    check("city").exists().notEmpty(),
     check("phone").exists().notEmpty(),
     //check("images").exists().notEmpty(),
     (req, res, next) => {

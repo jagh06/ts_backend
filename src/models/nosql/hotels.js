@@ -6,57 +6,57 @@ const HotelSchema = new mongoose.Schema(
   {
     nameowner: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
     lastnameowner: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
     emailowner: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
 
     namehotel: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
     description: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
     price: {
       type: Number,
-      //required: true
+      required: true
     },
 
     postalcode: {
       type: Number,
-      //required: true,
+      required: true,
     },
     street: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     streetnumber: {
       type: Number,
-      //required: true
+      required: true
     },
     city: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
 
     phone: {
       type: String,
-      //required: true,
+      required: true,
       trim: true,
     },
     images: [
