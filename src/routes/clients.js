@@ -6,11 +6,13 @@ const {
   updateItem,
   deleteItem,
   loginItem,
+  getItemEmail,
 } = require("../controllers/clients");
 const {
   validatorCreateItem,
   validatorGetItem,
   validatorLogin,
+  validatorGetItemEmail,
 } = require("../validators/clients");
 const router = express.Router();
 
@@ -25,6 +27,9 @@ router.get("/", getItems);
 
 //get client
 router.get("/:id", validatorGetItem, getItem);
+
+//get client email
+router.get("/email/:email", validatorGetItemEmail, getItemEmail);
 
 //update client
 router.put("/:id", validatorGetItem, updateItem);

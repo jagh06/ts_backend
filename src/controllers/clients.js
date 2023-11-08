@@ -25,6 +25,17 @@ const getItem = async (req, res) => {
   }
 };
 
+const getItemEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const data = await clientModel.findOne({email: email}); // finById para buscar con id
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_GET_ITEM");
+  }
+};
+
+
 const createItem = async (req, res) => {
   try {
     req = matchedData(req);
@@ -100,6 +111,7 @@ const loginItem = async (req, res) => {
 module.exports = {
   getItems,
   getItem,
+  getItemEmail,
   createItem,
   updateItem,
   deleteItem,

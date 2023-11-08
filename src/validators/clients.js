@@ -20,6 +20,14 @@ const validatorGetItem = [
     }
 ];
 
+
+const validatorGetItemEmail = [
+    check("email").exists().notEmpty().isEmail(),
+    (req, res, next) => {
+      return validateResults(req, res, next);
+    },
+  ];
+
 const validatorLogin = [
     check("email").exists().notEmpty().isEmail(),
     check("password").exists().notEmpty().isLength({ min: 3, max: 20 }),
@@ -28,4 +36,4 @@ const validatorLogin = [
     }
 ];
 
-module.exports = { validatorCreateItem, validatorGetItem, validatorLogin }
+module.exports = { validatorCreateItem, validatorGetItem, validatorLogin, validatorGetItemEmail }
