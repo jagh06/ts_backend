@@ -4,6 +4,7 @@ const { handleHttpError } = require("../utils/handleHttpError");
 const { encrypt } = require("../utils/handlePasswordClient");
 const { tokenSign } = require("../utils/handleJWT");
 const { compare } = require("bcryptjs");
+const { sendConfirmationEmail } = require("../nodeMailer/email");
 
 const getItems = async (req, res) => {
   try {
@@ -48,6 +49,11 @@ const createItem = async (req, res) => {
       token: await tokenSign(dataClient),
       user: dataClient,
     };
+    
+    console.log("token de user creado: ", body.email, data.token)
+
+    const confirmationLink = `http://localhost:3000/client/dashboard/content-manager/${data.token}`
+    sendConfirmationEmail(body.email, confirmationLink)
 
     res.send({ data });
   } catch (error) {
