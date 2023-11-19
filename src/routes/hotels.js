@@ -19,7 +19,7 @@ const router = express.Router();
 router.post("/", authMiddleware, checkRol(["admin"]), upload.array('images'), createItem);
 
 //get all hotels
-router.get("/", authMiddleware, getItems);
+router.get("/", getItems);
 
 //get hotel
 router.get("/:id", authMiddleware, validatorGetItem, getItem);

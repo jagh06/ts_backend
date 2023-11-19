@@ -1,21 +1,28 @@
-const express = require('express');
-require('dotenv').config();
-const cors = require('cors')
-const dbConnect = require('./config/mongodb')
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
+const dbConnect = require("./config/mongodb");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+
+
 const app = express();
+const whiteList = ["http://localhost:3000"];
 
-app.use(cors())
+app.use(cors({ origin: whiteList, credentials: true }));
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.send("welcome");
+});
 
-
-app.get('/', (req, res) => {
-    res.send("welcome");
-})
-
-app.use('/api', require('./routes'))
+app.use("/api", require("./routes"));
 
 const port = process.env.PORT || 3001;
 
-app.listen(port, ()=> console.log(`Listening app at http://localhost:${port}`));
+app.listen(port, () =>
+  console.log(`Listening app at http://localhost:${port}`)
+);
 dbConnect();

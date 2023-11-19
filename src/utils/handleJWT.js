@@ -1,22 +1,37 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET
 
-// Pasar el objeto del usuario
 const tokenSign = async (user) => {
     const sign = jwt.sign(
         {
             _id: user._id,
+            name: user.name,
+            lastname: user.lastname,
+            email: user.email,
             role: user.role
         },
         JWT_SECRET,
         {
-            expiresIn: "6h"
+            expiresIn: "24h"
         }
     );
     return sign;
 }
 
-// Pasar el token de session el jwt
+const tokenSignForgotPassword = async (user) => {
+    const sign = jwt.sign(
+        {
+            email: user.email,
+            role: user.role
+        },
+        JWT_SECRET,
+        {
+            expiresIn: "1m"
+        }
+    );
+    return sign;
+}
+
 const verifyToken = async (tokenJwt) => {
     try {
         return jwt.verify(tokenJwt, JWT_SECRET)
@@ -25,6 +40,6 @@ const verifyToken = async (tokenJwt) => {
     }
 }
 
-module.exports = {  tokenSign, verifyToken };
+module.exports = {  tokenSign, verifyToken, tokenSignForgotPassword  };
 
 //https://jwt.io/
