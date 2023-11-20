@@ -21,12 +21,13 @@ const tokenSign = async (user) => {
 const tokenSignForgotPassword = async (user) => {
     const sign = jwt.sign(
         {
+            _id: user._id,
             email: user.email,
             role: user.role
         },
         JWT_SECRET,
         {
-            expiresIn: "1m"
+            expiresIn: "60m"
         }
     );
     return sign;

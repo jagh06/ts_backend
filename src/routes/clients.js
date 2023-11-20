@@ -8,7 +8,8 @@ const {
   loginItem,
   getItemEmail,
   recoverPassword,
-  verifyTokenJWTRecoverPassword
+  verifyTokenJWTRecoverPassword,
+  updatePasswordItem
 } = require("../controllers/clients");
 const {
   validatorCreateItem,
@@ -18,6 +19,7 @@ const {
   validatorRecover,
   validatorToken
 } = require("../validators/clients");
+const authMiddleware = require("../middlewares/session");
 const router = express.Router();
 
 //create account
@@ -42,7 +44,10 @@ router.get("/id/:id", validatorGetItem, getItem);
 router.get("/email/:email", validatorGetItemEmail, getItemEmail);
 
 //update client
-router.put("/:id", validatorGetItem, updateItem);
+router.put("/:id", authMiddleware, validatorGetItem, updateItem);
+
+//update passowrd client
+router.put("/resetpassword/:id", authMiddleware, validatorGetItem, updatePasswordItem);
 
 //delete client
 router.delete("/:id", validatorGetItem, deleteItem);

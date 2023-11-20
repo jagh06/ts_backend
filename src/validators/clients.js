@@ -3,7 +3,7 @@ const validateResults = require("../utils/handleValidators");
 
 const validatorCreateItem = [
   check("name").exists().notEmpty().isLength({ min: 3, max: 50 }),
-  check("lastname").exists().notEmpty().isLength({ min: 3, max: 50 }),
+  check("lastname").exists().notEmpty().isLength({ min: 5, max: 50 }),
   check("email").exists().notEmpty().isEmail(),
   check("password").exists().notEmpty().isLength({ min: 8, max: 50 }),
   check("phone").exists().notEmpty().isLength({ min: 13, max: 20 }),
@@ -28,7 +28,7 @@ const validatorGetItemEmail = [
 
 const validatorLogin = [
   check("email").exists().notEmpty().isEmail(),
-  check("password").exists().notEmpty().isLength({ min: 3, max: 20 }),
+  check("password").exists().notEmpty().isLength({ min: 8, max: 20 }),
   (req, res, next) => {
     return validateResults(req, res, next);
   },

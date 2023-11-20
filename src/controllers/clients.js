@@ -2,7 +2,11 @@ const { matchedData } = require("express-validator");
 const { clientModel, keysModel } = require("../models");
 const { handleHttpError } = require("../utils/handleHttpError");
 const { encrypt } = require("../utils/handlePasswordClient");
-const { tokenSign, tokenSignForgotPassword, verifyToken } = require("../utils/handleJWT");
+const {
+  tokenSign,
+  tokenSignForgotPassword,
+  verifyToken,
+} = require("../utils/handleJWT");
 const { compare } = require("bcryptjs");
 const {
   sendConfirmationEmail,
@@ -79,6 +83,18 @@ const updateItem = async (req, res) => {
   }
 };
 
+const updatePasswordItem = async (req, res) => {
+  try {
+    const password = await encrypt(req.body.password);
+    console.log(password);
+    const body = { ...req.body, password };
+    const data = await clientModel.findByIdAndUpdate(req.params.id, body);
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_UPDATE_ITEM");
+  }
+};
+
 const deleteItem = async (req, res) => {
   try {
     req = matchedData(req);
@@ -93,7 +109,6 @@ const deleteItem = async (req, res) => {
 const loginItem = async (req, res) => {
   try {
     req = matchedData(req);
-    console.log(req);
     const user = await clientModel
       .findOne({ email: req.email })
       .select("password name role lastname email");
@@ -126,8 +141,11 @@ const loginItem = async (req, res) => {
 const recoverPassword = async (req, res) => {
   try {
     const { email } = req.body;
+    const user = await clientModel
+      .findOne({ email: email })
+      .select("email role");
     const data = {
-      token: await tokenSignForgotPassword(email)
+      token: await tokenSignForgotPassword(user),
     };
     sendRecoverPassword(email, data.token);
     res.send({ data });
@@ -139,12 +157,13 @@ const recoverPassword = async (req, res) => {
 const verifyTokenJWTRecoverPassword = async (req, res) => {
   try {
     const { token } = req.body;
-    console.log("token enviado::", token)
-    const verify = await verifyToken(token)
-    console.log("respuesta de token: ", verify)
-    res.send({ verify });
+    console.log("token devuelto desde front::", token);
+    const valid = await verifyToken(token);
+    const responseTokenIsvalid = { valid, token };
+    console.log("es valido o no ", responseTokenIsvalid);
+    res.send({ responseTokenIsvalid });
   } catch (error) {
-    handleHttpError(res, "ERROR_VERYFY_TOKEN_JWT")
+    handleHttpError(res, "ERROR_VERYFY_TOKEN_JWT");
   }
 };
 
@@ -154,8 +173,9 @@ module.exports = {
   getItemEmail,
   createItem,
   updateItem,
+  updatePasswordItem,
   deleteItem,
   loginItem,
   recoverPassword,
-  verifyTokenJWTRecoverPassword
+  verifyTokenJWTRecoverPassword,
 };
