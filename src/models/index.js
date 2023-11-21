@@ -3,6 +3,7 @@ const models = {
     userGoogleModel: require('./nosql/usersgoogle'),
     clientModel: require('./nosql/clients'),
     hotelModel: require('./nosql/hotels'),
+    subscriptionModel: require('./nosql/subscriptions'),
 }
 
 module.exports = models;
