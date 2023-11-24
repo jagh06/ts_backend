@@ -5,10 +5,12 @@ const {
   getItem,
   updateItem,
   deleteItem,
+  getItemEmail
 } = require("../controllers/hotels");
 const {
   validatorCreateItem,
   validatorGetItem,
+  validatorGetItemEmail 
 } = require("../validators/hotels");
 const upload = require('../config/multer');
 const authMiddleware = require("../middlewares/session");
@@ -23,6 +25,9 @@ router.get("/", getItems);
 
 //get hotel
 router.get("/:id", authMiddleware, validatorGetItem, getItem);
+
+//get hotel
+router.get("/email/:email", authMiddleware, validatorGetItemEmail, getItemEmail);
 
 //update hotel
 router.put("/:id", authMiddleware, validatorGetItem, updateItem);

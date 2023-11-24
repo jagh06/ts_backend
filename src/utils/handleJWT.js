@@ -27,7 +27,7 @@ const tokenSignForgotPassword = async (user) => {
         },
         JWT_SECRET,
         {
-            expiresIn: "60m"
+            expiresIn: "30m"
         }
     );
     return sign;

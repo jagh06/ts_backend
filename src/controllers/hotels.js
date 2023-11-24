@@ -24,6 +24,16 @@ const getItem = async (req, res) => {
   }
 };
 
+const getItemEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const data = await hotelModel.find({ emailowner: email });
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_GET_ITEM");
+  }
+};
+
 const createItem = async (req, res) => {
   try {
     const {
@@ -39,7 +49,7 @@ const createItem = async (req, res) => {
       city,
       phone,
     } = req.body;
-  
+
     const uploader = async (path) => await uploadImages(path, "hotelImages");
     try {
       if (req.method === "POST") {
@@ -109,13 +119,20 @@ const deleteItem = async (req, res) => {
       }
     }
 
-   res.json(data);
+    res.json(data);
   } catch (error) {
     handleHttpError(res, "ERROR_DELETE_ITEM");
   }
 };
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem };
+module.exports = {
+  getItems,
+  getItem,
+  createItem,
+  updateItem,
+  deleteItem,
+  getItemEmail,
+};
 
 // const createItem = async (req, res) => {
 //   try {

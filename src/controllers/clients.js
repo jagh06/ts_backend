@@ -167,6 +167,21 @@ const verifyTokenJWTRecoverPassword = async (req, res) => {
   }
 };
 
+const updateStateSubscription = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+    const usuarioActualizado = await clientModel.findOneAndUpdate(
+      {_id: id },
+      { subscribed: true }
+    );
+    console.log(usuarioActualizado)
+    res.send({ usuarioActualizado })
+  } catch (error) {
+    handleHttpError(res, "ERROR_UPDATE_STATE_SUBSCRIPTION");
+  }
+};
+
 module.exports = {
   getItems,
   getItem,
@@ -178,4 +193,5 @@ module.exports = {
   loginItem,
   recoverPassword,
   verifyTokenJWTRecoverPassword,
+  updateStateSubscription
 };

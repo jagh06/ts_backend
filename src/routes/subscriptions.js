@@ -15,7 +15,6 @@ router.get("/strapi-data", getStrapiInfo)
 // post checkout plan
 router.post("/strapi-checkout", postCheckOutStrapi)
 
-
 // get items
 router.get("/", getItems);
 

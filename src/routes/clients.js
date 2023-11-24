@@ -9,7 +9,8 @@ const {
   getItemEmail,
   recoverPassword,
   verifyTokenJWTRecoverPassword,
-  updatePasswordItem
+  updatePasswordItem,
+  updateStateSubscription
 } = require("../controllers/clients");
 const {
   validatorCreateItem,
@@ -33,6 +34,9 @@ router.post("/recover", validatorRecover, recoverPassword);
 
 //verify token jwt recorer password
 router.post("/veriftokenjwt", validatorToken, verifyTokenJWTRecoverPassword)
+
+//uptate state subscription user
+router.post("/upstatesub/:id", validatorGetItem, updateStateSubscription)
 
 //get all clients
 router.get("/", getItems);
