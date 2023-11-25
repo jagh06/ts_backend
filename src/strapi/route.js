@@ -25,11 +25,6 @@ const postCheckOutStrapi = async (req, res, next) => {
       success_url: `http://localhost:3000/client/success?temporary=${token}`,
       cancel_url: "http://localhost:3000/client/dashboard/customer-suscripcion",
     });
-    if (session.success_url) {
-      console.log("misession;;;;;;", session.success_url);
-    } else {
-      console.log("suscripcion cancelada");
-    }
 
     res.send({ url: session.url });
   } catch (error) {

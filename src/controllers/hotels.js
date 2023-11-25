@@ -101,6 +101,8 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
+    console.log(req.params.id)
+    console.log(req.body)
     const data = await hotelModel.findByIdAndUpdate(req.params.id, req.body);
     res.send({ data });
   } catch (error) {

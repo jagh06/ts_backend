@@ -7,7 +7,7 @@ const { getStrapiInfo, postCheckOutStrapi } = require("../strapi/route")
 const router = express.Router();
 
 // create item
-router.post("/", authMiddleware, checkRol(["admin"]), validatorCreateItem, createItem)
+router.post("/",createItem)
 
 // get strpi info
 router.get("/strapi-data", getStrapiInfo)

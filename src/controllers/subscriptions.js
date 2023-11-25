@@ -13,9 +13,8 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
   try {
-    req = matchedData(req);
-    const { id } = req;
-    const data = await subscriptionModel.findById(id);
+    const { email } =  req.params;
+    const data = await subscriptionModel.findOne({ email: email });
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_GET_SUBSCRIPTION");
@@ -24,7 +23,8 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const body = matchedData(req);
+    const body =req.body;
+    console.log(body)
     const data = await subscriptionModel.create(body);
     res.send({ data });
   } catch (error) {
