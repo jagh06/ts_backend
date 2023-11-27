@@ -24,6 +24,17 @@ const getItem = async (req, res) => {
   }
 };
 
+const getItemForUser = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const { id } = req;
+    const data = await hotelModel.findById(id);
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_GET_ITEM");
+  }
+};
+
 const getItemEmail = async (req, res) => {
   try {
     const { email } = req.params;
@@ -134,6 +145,7 @@ module.exports = {
   updateItem,
   deleteItem,
   getItemEmail,
+  getItemForUser 
 };
 
 // const createItem = async (req, res) => {

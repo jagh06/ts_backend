@@ -1,6 +1,8 @@
 const { matchedData } = require("express-validator");
 const { userModel } = require("../models");
 const { handleHttpError } = require("../utils/handleHttpError");
+const { encrypt } = require("../utils/handlePasswordClient");
+const { compare } = require("bcryptjs");
 
 const getItems = async (req, res) => {
   try {
@@ -24,7 +26,10 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const body = matchedData(req);
+    req = matchedData(req);
+    const password = await encrypt(req.password);
+    const body = { ...req, password };
+    console.log(body);
     const data = await userModel.create(body);
     res.send({ data });
   } catch (error) {
@@ -51,5 +56,31 @@ const deleteItem = async (req, res) => {
     handleHttpError(res, "ERROR_DELETE_ITEM");
   }
 };
+const loginItem = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const user = await userModel.findOne({ email: req.email })
+    .select("name role email password");
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem };
+    if (!user) {
+      handleHttpError(res, "ERROR_USER_NOT_EXISTS", 404);
+      return;
+    }
+    
+    const hashPassword = user.get("password");
+    const check = await compare(req.password, hashPassword);
+    if (!check) {
+      handleHttpError(res, "PASSWORD_INVALID", 401);
+      return;
+    }
+
+    user.set("password", undefined, { strict: false });
+    const data = { user }
+
+    res.send({ data })
+  } catch (error) {
+    handleHttpError(res, "ERROR_LOGIN_USER");
+  }
+};
+
+module.exports = { getItems, getItem, createItem, updateItem, deleteItem, loginItem  };

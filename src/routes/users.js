@@ -5,14 +5,18 @@ const {
   createItem,
   updateItem,
   deleteItem,
+  loginItem 
 } = require("../controllers/users");
 
 //middlewares
-const { validatorGetItem, validatorCreateItem } = require("../validators/users");
+const { validatorGetItem, validatorCreateItem, validatorLogin } = require("../validators/users");
 const router = express.Router();
 
 // create user
-router.post("/", validatorCreateItem, createItem);
+router.post("/newuser/", validatorCreateItem, createItem);
+
+//login
+router.post("/login", validatorLogin, loginItem);
 
 //get all users
 router.get("/", getItems);
