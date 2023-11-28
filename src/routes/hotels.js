@@ -6,7 +6,8 @@ const {
   updateItem,
   deleteItem,
   getItemEmail,
-  getItemForUser
+  getItemForUser,
+  getSearchItem
 } = require("../controllers/hotels");
 const {
   validatorCreateItem,
@@ -23,6 +24,9 @@ router.post("/", authMiddleware, checkRol(["admin"]), upload.array('images'), cr
 
 //get all hotels
 router.get("/", getItems);
+
+// get with search
+router.get("/searchquery/:price", getSearchItem);
 
 //get hotel
 router.get("/getforuser/:id", validatorGetItem, getItemForUser);

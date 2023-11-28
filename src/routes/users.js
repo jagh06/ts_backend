@@ -5,11 +5,13 @@ const {
   createItem,
   updateItem,
   deleteItem,
-  loginItem 
+  loginItem,
+  getItemEmail,
+  updateItemPassword
 } = require("../controllers/users");
 
 //middlewares
-const { validatorGetItem, validatorCreateItem, validatorLogin } = require("../validators/users");
+const { validatorGetItem, validatorCreateItem, validatorLogin, validatorGetItemEmail } = require("../validators/users");
 const router = express.Router();
 
 // create user
@@ -24,8 +26,13 @@ router.get("/", getItems);
 //get user
 router.get("/:id", validatorGetItem, getItem);
 
+//get user
+router.get("/email/:email", validatorGetItemEmail, getItemEmail);
+
 //update user
 router.put("/:id", validatorGetItem, updateItem);
+//update password user
+router.put("/newpassword/:id", validatorGetItem, updateItemPassword);
 
 //delete user
 router.delete("/:id", validatorGetItem, deleteItem);

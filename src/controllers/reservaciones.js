@@ -22,6 +22,16 @@ const getItem = async (req, res) => {
   }
 };
 
+const getItemEmailOwner = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const data = await reservacionesModel.find({ emailowner: email });
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_GET_ITEM");
+  }
+};
+
 const getItemEmail = async (req, res) => {
   try {
     const { email } = req.params;
@@ -86,4 +96,5 @@ module.exports = {
   getItemEmail,
   createItem,
   deleteItem,
+  getItemEmailOwner 
 };

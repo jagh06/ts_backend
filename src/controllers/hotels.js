@@ -138,6 +138,16 @@ const deleteItem = async (req, res) => {
   }
 };
 
+const getSearchItem = async (req, res) => {
+  try {
+    const { price } = req.params;
+    const data = await hotelModel.find({ price: price });
+    res.send({ data })
+  } catch (error) {
+    handleHttpError(res, "ERROR_GET_SEARCH_ITEM");
+  }
+};
+
 module.exports = {
   getItems,
   getItem,
@@ -145,7 +155,8 @@ module.exports = {
   updateItem,
   deleteItem,
   getItemEmail,
-  getItemForUser 
+  getItemForUser,
+  getSearchItem
 };
 
 // const createItem = async (req, res) => {

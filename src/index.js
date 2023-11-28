@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 
 
 const app = express();
-const whiteList = ["http://localhost:3000"];
+const whiteList = ["http://localhost:3000", "http://localhost:3002", "http://localhost:3003"];
 
 app.use(cors({ origin: whiteList, credentials: true }));
 app.use(express.json());

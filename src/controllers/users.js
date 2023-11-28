@@ -23,6 +23,26 @@ const getItem = async (req, res) => {
     handleHttpError(res, "ERROR_GET_ITEM");
   }
 };
+const getItemEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const data = await userModel.find({ email: email });
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_GET_ITEM");
+  }
+};
+const updateItemPassword = async (req, res) => {
+  try {
+    const password = await encrypt(req.body.password);
+    const body = {...req.body, password};
+    const data = await userModel.findByIdAndUpdate(req.params.id, body);
+    res.send({ data })
+
+  } catch (error) {
+    handleHttpError(res, "ERROR_UPDATE_PASSWORD");
+  }
+};
 
 const createItem = async (req, res) => {
   try {
@@ -59,14 +79,15 @@ const deleteItem = async (req, res) => {
 const loginItem = async (req, res) => {
   try {
     req = matchedData(req);
-    const user = await userModel.findOne({ email: req.email })
-    .select("name role email password");
+    const user = await userModel
+      .findOne({ email: req.email })
+      .select("name role email password");
 
     if (!user) {
       handleHttpError(res, "ERROR_USER_NOT_EXISTS", 404);
       return;
     }
-    
+
     const hashPassword = user.get("password");
     const check = await compare(req.password, hashPassword);
     if (!check) {
@@ -75,12 +96,21 @@ const loginItem = async (req, res) => {
     }
 
     user.set("password", undefined, { strict: false });
-    const data = { user }
+    const data = { user };
 
-    res.send({ data })
+    res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_LOGIN_USER");
   }
 };
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem, loginItem  };
+module.exports = {
+  getItems,
+  getItem,
+  createItem,
+  updateItem,
+  deleteItem,
+  loginItem,
+  getItemEmail,
+  updateItemPassword
+};
