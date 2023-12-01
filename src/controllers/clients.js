@@ -112,7 +112,6 @@ const loginItem = async (req, res) => {
     const user = await clientModel
       .findOne({ email: req.email })
       .select("password name role lastname email");
-    console.log(user);
     if (!user) {
       handleHttpError(res, "ERROR_USER_NOT_EXISTS", 404);
       return;
@@ -157,10 +156,8 @@ const recoverPassword = async (req, res) => {
 const verifyTokenJWTRecoverPassword = async (req, res) => {
   try {
     const { token } = req.body;
-    console.log("token devuelto desde front::", token);
     const valid = await verifyToken(token);
     const responseTokenIsvalid = { valid, token };
-    console.log("es valido o no ", responseTokenIsvalid);
     res.send({ responseTokenIsvalid });
   } catch (error) {
     handleHttpError(res, "ERROR_VERYFY_TOKEN_JWT");
@@ -170,13 +167,13 @@ const verifyTokenJWTRecoverPassword = async (req, res) => {
 const updateStateSubscription = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id)
+    const { plan } = req.body;
     const usuarioActualizado = await clientModel.findOneAndUpdate(
-      {_id: id },
-      { subscribed: true }
+      { _id: id },
+      { subscribed: true, plan: plan },
+      { new: true }
     );
-    console.log(usuarioActualizado)
-    res.send({ usuarioActualizado })
+    res.send({ usuarioActualizado });
   } catch (error) {
     handleHttpError(res, "ERROR_UPDATE_STATE_SUBSCRIPTION");
   }
@@ -193,5 +190,5 @@ module.exports = {
   loginItem,
   recoverPassword,
   verifyTokenJWTRecoverPassword,
-  updateStateSubscription
+  updateStateSubscription,
 };

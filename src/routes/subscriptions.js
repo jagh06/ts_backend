@@ -3,7 +3,7 @@ const { createItem, getItems, getItem, deleteItem } = require("../controllers/su
 const { validatorCreateItem } = require("../validators/subscrptions");
 const authMiddleware = require("../middlewares/session");
 const { checkRol } = require("../middlewares/rol");
-const { getStrapiInfo, postCheckOutStrapi } = require("../strapi/route")
+const { getStrapiInfo, postCheckOutStrapi, getSuscriptionsList, cancelledSubscriptionTest} = require("../strapi/route")
 const router = express.Router();
 
 // create item
@@ -15,6 +15,9 @@ router.get("/strapi-data", getStrapiInfo)
 // post checkout plan
 router.post("/strapi-checkout", postCheckOutStrapi)
 
+//list suscriptores
+router.get("/listar-suscriptores", getSuscriptionsList)
+
 // get items
 router.get("/", getItems);
 
@@ -23,5 +26,8 @@ router.get("/:email", getItem);
 
 // delete item
 router.delete("/:email", authMiddleware, checkRol(["admin"]), deleteItem);
+
+//cancelled subscription
+router.post("/test_cancel/", cancelledSubscriptionTest )
 
 module.exports = router;

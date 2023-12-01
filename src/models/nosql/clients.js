@@ -29,6 +29,10 @@ const ClientSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        plan: {
+            type: String,
+            default: "Sin plan"
+        },
         role: {
             type: ["user", "admin"],
             default: "admin",
