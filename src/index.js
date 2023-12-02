@@ -5,9 +5,8 @@ const dbConnect = require("./config/mongodb");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
-
 const app = express();
-const whiteList = ["http://localhost:3000", "http://localhost:3002", "http://localhost:3003"];
+const whiteList = [`${process.env.PORT_CLIENT}`, `${process.env.PORT_USER}`];
 
 app.use(cors({ origin: whiteList, credentials: true }));
 app.use(express.json());

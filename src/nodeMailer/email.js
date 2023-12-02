@@ -36,7 +36,7 @@ const sendConfirmationEmail = (to, confirmationLink, token) => {
 };
 
 const sendRecoverPassword = (to, token) => {
-  const confirmationLink = "http://localhost:3000/client/forgot-password-clients-ts";
+  const confirmationLink = `${process.env.PORT_CLIENT}/client/forgot-password-clients-ts`;
   const mailOptions = {
     from: "turingospace.team@gmail.com",
     to,
@@ -55,16 +55,5 @@ const sendRecoverPassword = (to, token) => {
   });
 };
 
-// function generarClaveRecuperacion(longitud){
-//   const caracteres = '0123456789'; 
-//   let claveRecuperacion = '';
-
-//   for (let i = 0; i < longitud; i++) {
-//     const indice = Math.floor(Math.random() * caracteres.length);
-//     claveRecuperacion += caracteres.charAt(indice);
-//   }
-
-//   return claveRecuperacion;
-// }
 
 module.exports = { sendConfirmationEmail, sendRecoverPassword  };

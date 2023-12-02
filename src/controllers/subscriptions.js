@@ -4,7 +4,7 @@ const { handleHttpError } = require("../utils/handleHttpError");
 
 const getItems = async (req, res) => {
   try {
-    const data = await subscriptionModel.findById({});
+    const data = await subscriptionModel.find({});
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_GET_SUBSCRIPTIONS");

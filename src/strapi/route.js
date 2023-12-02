@@ -45,8 +45,8 @@ const postCheckOutStrapi = async (req, res, next) => {
           quantity: 1,
         },
       ],
-      success_url: `http://localhost:3000/client/success?temporary=${token}&nickname=${nickname}`,
-      cancel_url: "http://localhost:3000/client/dashboard/customer-suscripcion",
+      success_url: `${process.env.PORT_CLIENT}/client/success?temporary=${token}&nickname=${nickname}`,
+      cancel_url: `${process.env.PORT_CLIENT}/client/dashboard/customer-suscripcion`,
     });
 
     res.send({ url: session.url });
