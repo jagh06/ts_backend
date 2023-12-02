@@ -82,7 +82,6 @@ const createItem = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id)
     const data = await reservacionesModel.findByIdAndDelete({ _id: id });
     res.send({ data });
   } catch (error) {

@@ -24,7 +24,6 @@ const getItem = async (req, res) => {
 const createItem = async (req, res) => {
   try {
     const body =req.body;
-    console.log(body)
     const data = await subscriptionModel.create(body);
     res.send({ data });
   } catch (error) {

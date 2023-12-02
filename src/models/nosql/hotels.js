@@ -53,7 +53,6 @@ const HotelSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-
     phone: {
       type: String,
       required: true,
@@ -61,7 +60,11 @@ const HotelSchema = new mongoose.Schema(
     },
     images: [
       urlSchema 
-    ]
+    ],
+    disponible: {
+      type: Boolean,
+      default: true,
+    }
   },
   {
     timestamps: true, //TODO createdAt, updatedAt
