@@ -62,10 +62,10 @@ const createItem = async (req, res) => {
 
     // secret keymasterjagh06
 
-    const emailLink = `http://localhost:3000/client/verify`;
+    const emailLink = `${process.env.PORT_CLIENT}/client/verify`;
     sendConfirmationEmail(body.email, emailLink, tokenClient);
 
-    res.header("Access-Control-Allow-Origin", `http://localhost:3000`);
+    res.header("Access-Control-Allow-Origin", `${process.env.PORT_CLIENT}`);
     res.header("Access-Control-Allow-Credentials", "true");
 
     res.send({ data });
