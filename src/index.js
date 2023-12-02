@@ -6,7 +6,11 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 const app = express();
-const whiteList = [`${process.env.PORT_CLIENT}`, `${process.env.PORT_USER}`];
+const whiteList = [
+  `${process.env.PORT_CLIENT}`,
+  `${process.env.PORT_FINAL_USER}`,
+  `${process.env.PORT_USER}`,
+];
 
 app.use(cors({ origin: whiteList, credentials: true }));
 app.use(express.json());
