@@ -16,7 +16,6 @@ app.use(cors({ origin: whiteList, credentials: true }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
-Ñ
 app.get("/", (req, res) => {
   res.send("welcome");
 });
