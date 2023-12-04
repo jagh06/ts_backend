@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const whiteList = [
-  `${process.env.PORT_CLIENT}`,
+  `https://turingoclient.vercel.app`,
   `${process.env.PORT_FINAL_USER}`,
   `${process.env.PORT_USER}`,
 ];
@@ -16,7 +16,7 @@ app.use(cors({ origin: whiteList, credentials: true }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
-
+Ñ
 app.get("/", (req, res) => {
   res.send("welcome");
 });
