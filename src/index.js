@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const whiteList = [
   `https://turingoclient.vercel.app`,
-  `${process.env.PORT_FINAL_USER}`,
+  `https://turingospace.vercel.app`,
   `${process.env.PORT_USER}`,
 ];
 
