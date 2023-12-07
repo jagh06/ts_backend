@@ -9,7 +9,8 @@ const app = express();
 const whiteList = [
   `https://turingoclient.vercel.app`,
   `https://turingospace.vercel.app`,
-  `${process.env.PORT_USER}`,
+  `http://localhost:3000`,
+  `http://localhost:3001`,
 ];
 
 app.use(cors({ origin: whiteList, credentials: true }));
